@@ -109,7 +109,7 @@ class Snake(object):
         self.grid.drawButton(self.status)
     #返回不被蛇所占用的格子    
     def available_grid(self):
-        return [i for i in self.grid.grid_list if i not in self.body]
+        return [i for i in self.grid.grid_list if i not in self.body[:-1]]
     #蛇改变方向
     def change_direction(self, direction):
         self.direction = direction
