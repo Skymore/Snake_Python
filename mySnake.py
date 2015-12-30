@@ -5,7 +5,7 @@ import sys
 from random import randint
  
 class Grid(object):
-    def __init__(self,master=None,window_width=800,window_height=600,grid_width=50,offset=10):
+    def __init__(self,master=None,window_width=600,window_height=600,grid_width=20,offset=10):
         #嗯，怎么说呢。每一个gui程序都有一个称为
         #顶层(toplevel)的窗口管理器用于管理那些窗口部件
         #如按钮，输入框之类的，这个窗口管理器
@@ -165,19 +165,21 @@ class SnakeGame(Frame):
         self.snake = Snake(self.grid)
         self.nowDir = self.snake.direction
         self.nextDir = self.snake.direction
+        self.round = 0;
         self.bind_all("<KeyRelease>", self.key_release) #将<KeyRelease>事件绑定到self.run()来处理
         self.bind_all("<Button-1>", self.button1_click)
         self.snake.display()
         self.snake.food.display()
         self.grid.drawButton(self.snake.status)
-    #<KeyRelease>事件处理函数
+
     def run(self):
         #游戏运行中
         if self.snake.status == 'run':
             if self.nextDir != self.nowDir:
                 self.snake.change_direction(self.nextDir)
             self.snake.move()
-        
+        self.round+=1
+        print(self.round)
         
         if self.snake.gameover == True:
             message =  tkm.showinfo("Game Over", "your score: %d" % self.snake.score)
@@ -185,6 +187,7 @@ class SnakeGame(Frame):
                 sys.exit()
 
         self.after(self.snake.speed,self.run)#延时
+
     def button1_click(self, event):
         x1 = self.grid.width//2+220
         y1 = self.grid.topBlank//2-20
@@ -194,6 +197,8 @@ class SnakeGame(Frame):
         posy = event.y
         if (x1 < posx) and (posx < x2) and (y1 < posy) and (posy < y2):
             self.snake.change_status()
+
+    #<KeyRelease>事件处理函数
     def key_release(self,event):
         #key为键盘按下的键
         key = event.keysym
