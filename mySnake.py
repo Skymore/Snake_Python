@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from tkinter import *
-import tkinter.messagebox as tkm
+from Tkinter import *
+import tkMessageBox as tkm
 import sys
 from random import randint
  
